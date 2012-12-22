@@ -20,6 +20,12 @@ import getpass
 import optparse
 import os
 from pprint import pprint
+try:
+    import socks
+    socks.setdefaultproxy(socks.PROXY_TYPE_SOCKS5, 'localhost', 8080)
+    socks.wrapmodule(hpilo)
+except ImportError:
+  pass
 import sys
 
 ilo_methods = sorted([x for x in dir(hpilo.Ilo) if not x.startswith('_') and x.islower()])

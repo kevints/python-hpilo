@@ -226,7 +226,9 @@ class Ilo(object):
             sp.read = sp.stdout.read
             return sp
 
-        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        import socks
+        socks.setdefaultproxy(socks.PROXY_TYPE_SOCKS5, 'localhost', 8080)
+        sock = socks.socksocket(socket.AF_INET, socket.SOCK_STREAM)
         sock.settimeout(self.timeout)
         self._debug(1, "Connecting to %s:%d" % (self.hostname, self.port))
         try:
